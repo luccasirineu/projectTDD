@@ -7,7 +7,8 @@ import lombok.*;
 @Data // caso a classe tenha muitos atributos essa anotation pode deixar a api menos perfomatica
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(tb)
+@Entity
+@Table(name = "Tb_user")
 public class User {
 
     @Id
