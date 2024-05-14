@@ -8,7 +8,6 @@ import br.com.lucccasdev.api.services.exceptions.DataIntegratyViolationException
 import br.com.lucccasdev.api.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,10 +40,17 @@ public class UserServiceImpl implements UserService {
         return repository.save(user);
     }
 
-    public void findByEmail(UserDTO obj){
-        Optional<User> user = repository.findByEmail(obj.getEmail());
-        if(user.isPresent()){
-            throw new DataIntegratyViolationException("Email already exist");
-        }
+    @Override
+    public User update(UserDTO obj) {
+        findByEmail(obj);
+        User newObj = mapper.map(obj, User.class);
+        return repository.save(newObj);
     }
+
+    private void findByEmail(UserDTO obj) {
+        Optional<User> user = repository.findByEmail(obj.getEmail());
+            if(user.isPresent() && !user.get().getId().equals(obj.getId())) {
+                throw new DataIntegratyViolationException("E-mail já cadastrado no sistema");
+            }
+        }
 }
