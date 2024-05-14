@@ -3,6 +3,7 @@ package br.com.lucccasdev.api.services.impl;
 import br.com.lucccasdev.api.domain.User;
 import br.com.lucccasdev.api.domain.dto.UserDTO;
 import br.com.lucccasdev.api.repositories.UserRepository;
+import br.com.lucccasdev.api.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -55,6 +56,20 @@ class UserServiceImplTest {
         assertEquals(NAME, response.getName());
         assertEquals(EMAIL, response.getEmail());
         assertEquals(PASSWORD, response.getPassword());
+    }
+
+    @Test
+    void findByIdReturnAnObjectNotFoundException(){
+
+
+        try{
+            service.findById(ID);
+        }catch (Exception ex){
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals("User not found", ex.getMessage());
+        }
+
+
     }
 
     @Test
