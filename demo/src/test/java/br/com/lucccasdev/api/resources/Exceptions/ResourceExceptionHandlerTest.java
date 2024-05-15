@@ -1,5 +1,6 @@
 package br.com.lucccasdev.api.resources.Exceptions;
 
+import br.com.lucccasdev.api.services.exceptions.DataIntegratyViolationException;
 import br.com.lucccasdev.api.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,16 @@ class ResourceExceptionHandlerTest {
     }
 
     @Test
-    void emailAlreadyExist() {
+    void dataIntegratyViolation() {
+        ResponseEntity<StandardError> response = exceptionHandler.dataIntegratyViolation(new DataIntegratyViolationException("Email ja cadastrado"), new MockHttpServletRequest());
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(StandardError.class, response.getBody().getClass());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Email ja cadastrado", response.getBody().getError());
+
     }
 }
