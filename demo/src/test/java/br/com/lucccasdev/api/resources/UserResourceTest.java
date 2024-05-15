@@ -52,7 +52,7 @@ class UserResourceTest {
     }
 
     @Test
-    void findByIdWithSucess() {
+    void findByIdWithSuccess() {
         when(service.findById(anyInt())).thenReturn(user);
         when(mapper.map(any(), any())).thenReturn(userDTO);
 
@@ -103,7 +103,21 @@ class UserResourceTest {
     }
 
     @Test
-    void updateUser() {
+    void updateUserReturnSuccess() {
+        when(service.update(userDTO)).thenReturn(user);
+        when(mapper.map(any(), any())).thenReturn(userDTO);
+
+        ResponseEntity<UserDTO> response = resource.updateUser(ID, userDTO);
+
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(UserDTO.class, response.getBody().getClass());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        
+        assertEquals(ID, response.getBody().getId() );
+        assertEquals(NAME, response.getBody().getName() );
+        assertEquals(EMAIL, response.getBody().getEmail() );
+
+
     }
 
     @Test
