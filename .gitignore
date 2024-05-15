@@ -29,3 +29,7 @@ replay_pid*
 *.iws
 *.iml
 *.ipr
+
+# file: ~/.gitignore_global
+.DS_Store
+.idea
