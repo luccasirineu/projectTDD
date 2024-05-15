@@ -4,7 +4,7 @@
 # Sobre o projeto
 
 
-Essa aplicação consiste em uma API REST utilizando java e seu principal framework Spring.
+Essa aplicação consiste em uma API REST utilizando java e seu principal framework Spring, com foco em testes, utilizando JUnit5 e Mockito.
 
 
 ## Objetivos
