@@ -19,7 +19,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class UserServiceImplTest {
@@ -62,12 +62,12 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findByIdReturnAnObjectNotFoundException(){
+    void findByIdReturnAnObjectNotFoundException() {
 
 
-        try{
+        try {
             service.findById(ID);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             assertEquals(ObjectNotFoundException.class, ex.getClass());
             assertEquals("User not found", ex.getMessage());
         }
@@ -112,7 +112,7 @@ class UserServiceImplTest {
         try {
             optionalUser.get().setId(4);
             service.create(userDTO);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             assertEquals(DataIntegratyViolationException.class, ex.getClass());
             assertEquals("E-mail já cadastrado no sistema", ex.getMessage());
         }
@@ -140,20 +140,40 @@ class UserServiceImplTest {
         try {
             optionalUser.get().setId(4);
             service.update(userDTO);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             assertEquals(DataIntegratyViolationException.class, ex.getClass());
             assertEquals("E-mail já cadastrado no sistema", ex.getMessage());
         }
 
     }
 
+
     @Test
-    void delete() {
-    }
+    void deleteWithSucess() {
+        when(repository.findById(anyInt())).thenReturn(optionalUser);
+            doNothing().when(repository).deleteById(anyInt());
+            service.delete(ID);
+            verify(repository, times(1)).deleteById((anyInt())); // verificar se o metodo deleteById foi chamado mais de uma vez
+        }
+
+
+    @Test
+    void deleteWithNoSucess() {
+        when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException("User not found"));
+
+        try {
+            service.delete(ID);
+        }catch (Exception ex) {
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals("User not found", ex.getMessage());
+        }
+        }
+
 
     private void startUser (){
         user = new User(ID, NAME, EMAIL, PASSWORD);
         userDTO = new UserDTO(ID, NAME, EMAIL, PASSWORD);
         optionalUser = Optional.of(new User(ID, NAME, EMAIL, PASSWORD));
     }
+
 }
