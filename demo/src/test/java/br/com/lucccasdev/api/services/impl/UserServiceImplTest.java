@@ -29,6 +29,7 @@ class UserServiceImplTest {
     public static final String EMAIL = "vladmir@gmail.com";
     public static final String PASSWORD = "123";
     public static final int INDEX = 0;
+
     @InjectMocks // cria uma instancia real
     private UserServiceImpl service;
 
