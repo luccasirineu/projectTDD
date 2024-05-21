@@ -1,10 +1,10 @@
-# Aplicação Java
+# Projeto API com foco em Testes
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/luccasirineu/SpringWebService/blob/main/LICENSE) 
 
 # Sobre o projeto
 
 
-Essa aplicação consiste em uma API REST utilizando java e seu principal framework Spring, com foco em testes, utilizando JUnit5 e Mockito.
+Essa aplicação consiste em uma API REST utilizando java e seu principal framework Spring, com foco em testes, aplicando conceitos de TDD, utilizando JUnit5 e Mockito.
 
 
 ## Objetivos
